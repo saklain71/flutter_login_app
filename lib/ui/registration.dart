@@ -1,36 +1,36 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_first/home_page.dart';
-import 'package:flutter_first/registration.dart';
-import 'package:flutter_first/validator.dart';
+import 'package:flutter_first/ui/home_page.dart';
+import 'package:flutter_first/ui/validator.dart';
 
-void main() => runApp(const MyApp());
+
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  static const String _title = 'Bd Com Flutter App';  //Static Const
+  //static const String _title = 'Bd Com Flutter App';  //Static Const
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: _title,
-      home: LoginPage(),
+      home: Registration(),
     );
   }
 }
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class Registration extends StatefulWidget {
+  const Registration({Key? key}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<Registration> createState() => _registration();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _registration extends State<Registration> {
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -51,55 +51,101 @@ class _LoginPageState extends State<LoginPage> {
                   alignment: Alignment.center,
                   padding: const EdgeInsets.all(10),
                   child: const Text(
-                    'Login page',
+                    'Registration page',
                     style: TextStyle(
                         color: Colors.blue,
                         fontWeight: FontWeight.w500,
                         fontSize: 30),
                   )),
-
-              //email
               Container(
                 padding: const EdgeInsets.all(10),
                 child: TextFormField(
                   validator: (val){
                     // Validator validate =  Validator();
                     // validate.isValidEmail(val!);
-                   //Validator.isValidEmail(val!);
-                   if(Validator.isValidEmail(val!)){
-                     return null;
-                     // if ( emailVal) return null;
-                     // else return 'Enter a Valid Email';
-                  }
-                   return 'Enter valid Email';
+                    //Validator.isValidEmail(val!);
+                    // if(Validator.isValidName(val!)){
+                    //   return null;
+                    //   // if ( emailVal) return null;
+                    //   // else return 'Enter a Valid Email';
+                    // }
+                    // return 'Enter Your Name With Capital Letter';
                   },
                   //obscureText: true,
                   controller: nameController,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Email',
+                    labelText: 'Your Name',
                   ),
                 ),
               ),
 
-              //password
+              //name
               Container(
                 padding: const EdgeInsets.all(10),
                 child: TextFormField(
-                validator: (val){
-                 // Validator.isValidPassword(val!);
-                  if(Validator.isValidPassword(val!)){
-                    return null;
-                    // if ( emailVal) return null;
-                    // else return 'Enter a Valid Email';
-                  }
-                 // return 'Enter valid Email';
-                  return 'Need valid PassWord';
-                  // if ( emailPass) return null;
-                  // else
+                  validator: (val){
+                    // Validator validate =  Validator();
+                    // validate.isValidEmail(val!);
+                    //Validator.isValidEmail(val!);
+                    if(Validator.isValidEmail(val!)){
+                      return null;
+                      // if ( emailVal) return null;
+                      // else return 'Enter a Valid Email';
+                    }
+                    return 'Enter Your Valid Email';
+                  },
+                  //obscureText: true,
+                  controller: emailController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Your Email',
+                  ),
+                ),
+              ),
 
-                },
+              //phonenumber
+              Container(
+                padding: const EdgeInsets.all(10),
+                child: TextFormField(
+                  validator: (val){
+                    // Validator.isValidPassword(val!);
+                    if(Validator.isValidPhone(val!)){
+                      return null;
+                      // if ( emailVal) return null;
+                      // else return 'Enter a Valid Email';
+                    }
+                    // return 'Enter valid Email';
+                    return 'Valid phone Number';
+                    // if ( emailPass) return null;
+                    // else
+
+                  },
                   obscureText: true,
+                  controller: phoneController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Phone Number',
+                  ),
+                ),
+              ),
+
+              // password
+              Container(
+                padding: const EdgeInsets.all(10),
+                child: TextFormField(
+                  validator: (val){
+                    // Validator validate =  Validator();
+                    // validate.isValidEmail(val!);
+                    //Validator.isValidEmail(val!);
+                    if(Validator.isValidPassword(val!)){
+                      return null;
+                      // if ( emailVal) return null;
+                      // else return 'Enter a Valid Email';
+                    }
+                    return 'Enter Valid Password';
+                  },
+                  //obscureText: true,
                   controller: passwordController,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
@@ -108,6 +154,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
 
+              //password
 
               TextButton(
                 onPressed: () {
@@ -121,7 +168,7 @@ class _LoginPageState extends State<LoginPage> {
                 height: 50,
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                 child: ElevatedButton(
-                  child: const Text('Login'),
+                  child: const Text('Sign Up'),
                   onPressed: () {
                     // Validate returns true if the form is valid, or false otherwise.
                     if (_formKey.currentState!.validate()) {
@@ -142,18 +189,16 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Row(
                 children: <Widget>[
-                  const Text('Does not have account?'),
+                  const Text('Already Signed Up?'),
                   TextButton(
+
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                     child: const Text(
-                      'Sign in',
+                      'Log in',
                       style: TextStyle(fontSize: 20),
                     ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const Registration()),
-                      );
-                    },
                   )
                 ],
                 mainAxisAlignment: MainAxisAlignment.center,
